@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+:root {
+  --box-size: 100px;
+  --mark-size: calc(var(--box-size) * 0.9);
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, var(--box-size));
+  grid-template-rows: repeat(3, var(--box-size));
+  justify-content: center;
+  align-content: center;
+}
+
+.box {
+  width: var(--box-size);
+  height: var(--box-size);
+  border: 4px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.box:nth-child(1),
+.box:nth-child(2),
+.box:nth-child(3) {
+  border-top: none;
+}
+
+.box:nth-child(7),
+.box:nth-child(8),
+.box:nth-child(9) {
+  border-bottom: none;
+}
+
+.box:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.box:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.box.x::before, 
+.box.x::after,
+.board.x .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.2);
+  height: var(--mark-size);
+  background-color: black;
+}
+
+.box.x::before,
+.board.x .box:not(.x):not(.o):hover::before { 
+  transform: rotate(45deg);
+}
+
+.box.x::after, 
+.board.x .box:not(.x):not(.o):hover::after {
+  transform: rotate(-45deg);
+}
+
+.board.x .box:not(.x):not(.o):hover::before, 
+.board.x .box:not(.x):not(.o):hover::after {
+  background-color: lightgray;
+}
+
+.box.o::before,
+.board.o .box:not(.x):not(.o):hover::before {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.9);
+  height: calc(var(--mark-size) * 0.9);
+  background-color: black;
+  border-radius: 50%;
+}
+
+.box.o::after,
+.board.o .box:not(.x):not(.o):hover::after {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  width: calc(var(--mark-size) * 0.5);
+  height: calc(var(--mark-size) * 0.5);
+  background-color: white;
+}
+
+.board.o .box:not(.x):not(.o):hover::before {
+  background-color: lightgray;
+}
+
+
+
+
+
