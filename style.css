@@ -1,8 +1,5 @@
 * {
   box-sizing: border-box;
-}
-
-body {
   margin: 0;
 }
 
@@ -31,15 +28,11 @@ body {
   position: relative;
 }
 
-.box:nth-child(1),
-.box:nth-child(2),
-.box:nth-child(3) {
+.box:nth-child(-n + 3) {
   border-top: none;
 }
 
-.box:nth-child(7),
-.box:nth-child(8),
-.box:nth-child(9) {
+.box:nth-child(n + 7) {
   border-bottom: none;
 }
 
@@ -72,11 +65,6 @@ body {
   transform: rotate(-45deg);
 }
 
-.board.x .box:not(.x):not(.o):hover::before, 
-.board.x .box:not(.x):not(.o):hover::after {
-  background-color: lightgray;
-}
-
 .box.o::before,
 .board.o .box:not(.x):not(.o):hover::before {
   content: "";
@@ -97,11 +85,17 @@ body {
   background-color: white;
 }
 
-.board.o .box:not(.x):not(.o):hover::before {
+.board.o .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::before, 
+.board.x .box:not(.x):not(.o):hover::after {
   background-color: lightgray;
 }
 
+.box:not(.x):not(.o) {
+  cursor: pointer;
+}
 
-
-
+.box.x, .box.o {
+  cursor: not-allowed;
+}
 
