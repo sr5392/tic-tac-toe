@@ -1,36 +1,32 @@
-let game = (function() {
-
+const game = (function() {
   const board = document.querySelector(".board");
-  const boxes = document.querySelectorAll(".box");
-  
-  const winCombinations = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [7, 5, 3]
-  ];
-
   board.classList.add("x");
 
+  const boxes = document.querySelectorAll(".box");
   boxes.forEach(box => {
     box.addEventListener("click", setSymbol, {once: true});
   });
 
+  const resetButton = document.querySelector(".overlay button");
+  resetButton.addEventListener("click", resetGame);
+
   function setSymbol() {
-    let symbol = "x";
-    if(board.classList.contains("o")) {
-      symbol = "o";
-    }
+    const symbol = board.classList.contains("x") ? "x" : "o";
     this.classList.add(symbol);
 
-    switchTurn();
     if(evaluateWin(symbol)) {
-      console.log(symbol.toUpperCase() + " won the game!");
+      const message = symbol.toUpperCase() + " won the game!"
+      showOverlay(message);
+      return;
     }
+
+    if(evaluateDraw()) {
+      const message = "Draw!"
+      showOverlay(message);
+      return;
+    }
+
+    switchTurn();
   }
 
   function switchTurn() {
@@ -55,5 +51,22 @@ let game = (function() {
         return boxes[index].classList.contains(symbol);
       });
     });
+  }
+
+  function evaluateDraw() {
+    return [...boxes].every(box => {
+      return box.classList.contains("x") || box.classList.contains("o");
+    });
+  }
+
+  function showOverlay(message) {
+    const overlay = document.querySelector(".overlay");
+    const overlayMessage = overlay.querySelector("p");
+    overlayMessage.innerText = message;
+    overlay.classList.toggle("display");
+  }
+
+  function resetGame() {
+    location.reload();
   }
 })();
